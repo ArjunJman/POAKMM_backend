@@ -2,29 +2,40 @@ const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
+
+const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
+mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
+
+const userSchema = new mongoose.Schema(
+    {
+        email:String,
+        username:String,
+        password:String
+    }
+)
+
+const users = new mongoose.model("users",userSchema)
+app.get('/list',async (req,res) =>
+{
+    const data = await user.find()
+    res.send(data)
+}
+)
+
+
 
 app.use(bodyParser.json());
 const accessTokenSecret = 'youraccesstokensecret';
 
-const users = [
-    {
-        username: 'john',
-        password: 'password123admin',
-        role: 'admin'
-    }, {
-        username: 'anna',
-        password: 'password123member',
-        role: 'member'
-    }
-];
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     // Read username and password from request body
     console.log(req.body)
     const { username, password } = req.body;
 
     // Filter user from the users array by username and password
-    const user = users.find(u => { return u.username === username && u.password === password });
+    const user = await users.find(u => { return u.username === username && u.password === password });
 
     if (user) {
         // Generate an access token
@@ -38,8 +49,7 @@ app.post('/login', (req, res) => {
     }
 });
 
-const authenticateJWT = (req, res, next) => {
-    console.log("fff")
+const authenticateJWT = (req, res, next) => {   
     const authHeader = req.headers.authorization;
     console.log(authHeader)
 
