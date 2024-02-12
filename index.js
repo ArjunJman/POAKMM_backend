@@ -3,24 +3,18 @@ const app = express();
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
+const UserControllers = require('./controllers/UserControllers')
 
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
 
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
 
-const userSchema = new mongoose.Schema(
-    {
-        email:String,
-        username:String,
-        password:String
-    }
-)
 
-const users = new mongoose.model("user_auths",userSchema)
 
 app.use(bodyParser.json());
 const accessTokenSecret = 'youraccesstokensecret';
 
+app.post('/register', UserControllers.saveUser)
 
 app.post('/login', async (req, res) => {
     const data = await users.find()
