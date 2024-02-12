@@ -1,20 +1,26 @@
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
-const mongoose = require('mongoose')
+const { UserModel }  = require('../models/UserModel')
 
+const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
-const userSchema = new mongoose.Schema(
-    {
-        email:String,
-        username:String,
-        password:String
-    }
-)
-const users = new mongoose.model("user_auths",userSchema)
+
+const saveUser = async (req,res)=>
+{
+    try{
+        const req_data = req.body
+        const obj = new UserModel(req_data)
+        const result = await obj.save()
+        res.send("User Added Successfully")
+        } catch(e)
+       {
+        res.status(500).send("Internal Server Error");
+       }
+}
 
 const login = async (req,res) => {
-    const data = await users.find()
+    const data = await UserModel.find()
     // Read username and password from request body
     console.log(req.body)
     const { username, password } = req.body;
@@ -42,5 +48,6 @@ const prot = (req,res) => {
 
 module.exports = {
     login,
+    saveUser,
     prot
 }
