@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
+
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
 
 const userSchema = new mongoose.Schema(
@@ -15,27 +16,20 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-const users = new mongoose.model("users",userSchema)
-app.get('/list',async (req,res) =>
-{
-    const data = await user.find()
-    res.send(data)
-}
-)
-
-
+const users = new mongoose.model("user_auths",userSchema)
 
 app.use(bodyParser.json());
 const accessTokenSecret = 'youraccesstokensecret';
 
 
 app.post('/login', async (req, res) => {
+    const data = await users.find()
     // Read username and password from request body
     console.log(req.body)
     const { username, password } = req.body;
 
     // Filter user from the users array by username and password
-    const user = await users.find(u => { return u.username === username && u.password === password });
+    const user = await data.find(u => { return u.username === username && u.password === password });
 
     if (user) {
         // Generate an access token
