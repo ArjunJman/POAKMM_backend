@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
-const { UserModel }  = require('../models/UserModel')
+const { UserModel }  = require('../models/Models')
 
 const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"

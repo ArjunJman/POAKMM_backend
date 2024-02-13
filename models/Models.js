@@ -21,10 +21,24 @@ const MatchSchma = new mongoose.Schema(
     }
 )
 
+const ticketSchema = new mongoose.Schema(
+    {
+        id:String,
+        date:String,
+        seat_no:Number,
+        payment_date:String,
+        no_of_tickets:Number,
+        match_id:String,
+        email:String
+    }
+)
+
+const TicketModel = new mongoose.model("tickets",ticketSchema)
 const MatchModel = new mongoose.model("matches",MatchSchma)
 const UserModel = new mongoose.model("user_auths",userSchema)
 
 module.exports = {
     UserModel,
-    MatchModel
+    MatchModel,
+    TicketModel
   };
