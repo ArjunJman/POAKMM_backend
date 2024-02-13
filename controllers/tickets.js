@@ -6,14 +6,17 @@ const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
 
-const CreateTicket = (req,res) => {
+const CreateTicket = async (req,res) => {
     try{
         const Tickets = req.body
-
-        for (ticket in Tickets){
-            const NewTick = Tickets[ticket]
+        console.log(Tickets)
+        for (ticket in Tickets['allTickets']){
+            const NewTick = Tickets['allTickets'][ticket]
             console.log(NewTick)
+            const obj = new TicketModel(NewTick)
+            const result = await obj.save()
         }
+        res.send("Tickets Added Successfully")
     } catch(e)
     {
      res.status(500).send("Internal Server Error");
