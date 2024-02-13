@@ -41,9 +41,9 @@ const login = async (req,res) => {
     }
 }
 
-const UserDetail = (req,res) => {
+const UserDetail = async (req,res) => {
     if (req.user){
-        const ticket_details = TicketModel.find({"email":req.user.email})
+        const ticket_details = await    TicketModel.find({"email":req.user.email})
         console.log(ticket_details)
     }
     res.send("in")

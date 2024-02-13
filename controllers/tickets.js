@@ -15,8 +15,6 @@ const CreateTicket = async (req, res) => {
         let bookedSeats = [];
         let matchId;
 
-        
-
         for (const ticket of Tickets) {
             const newTicket = ticket;
             matchId = newTicket.match_id;
