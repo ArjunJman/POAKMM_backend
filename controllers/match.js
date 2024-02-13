@@ -31,7 +31,23 @@ const fetchParticularMatch = async (req,res) => {
        }
 }
 
+
+const EventData = async(req,res)=>
+{
+    
+        try{
+            const req_data = req.body
+            const obj = new MatchModel(req_data)
+            const result = await obj.save()
+            res.send("User Added Successfully")
+            } catch(e)
+           {
+            res.status(500).send("Internal Server Error");
+           }
+    
+}
 module.exports = {
     fetchAllMatch,
-    fetchParticularMatch
+    fetchParticularMatch,
+    EventData
 }

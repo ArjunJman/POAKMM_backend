@@ -27,10 +27,12 @@ const login = async (req,res) => {
 
     // Filter user from the users array by username and password
     const user = await data.find(u => { return u.username === username && u.password === password });
+    console.log(user);
 
     if (user) {
         // Generate an access token
-        const accessToken = jwt.sign({ username: user.username,  role: user.role }, accessTokenSecret);
+        const accessToken = jwt.sign({ username: user.username }, accessTokenSecret);
+        console.log(accessToken)
         res.json({
             accessToken
         });
