@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
-const { UserModel }  = require('../models/Models')
+const { UserModel,TicketModel }  = require('../models/Models')
 
 const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
@@ -31,7 +31,7 @@ const login = async (req,res) => {
 
     if (user) {
         // Generate an access token
-        const accessToken = jwt.sign({ username: user.username }, accessTokenSecret);
+        const accessToken = jwt.sign({ username: user.username,email: user.email }, accessTokenSecret);
         console.log(accessToken)
         res.json({
             accessToken
@@ -41,9 +41,10 @@ const login = async (req,res) => {
     }
 }
 
-const prot = (req,res) => {
+const UserDetail = (req,res) => {
     if (req.user){
-        console.log(req.user);
+        const ticket_details = TicketModel.find({"email":req.user.email})
+        console.log(ticket_details)
     }
     res.send("in")
 }
@@ -51,5 +52,5 @@ const prot = (req,res) => {
 module.exports = {
     login,
     saveUser,
-    prot
+    UserDetail
 }

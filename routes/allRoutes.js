@@ -11,7 +11,7 @@ const router = Router();
 //main apis
 router.post('/login',AuthControllers.login);
 router.post('/register', AuthControllers.saveUser);
-router.get('/prot',utils.authenticateJWT,AuthControllers.prot);
+router.get('/UserDetail',utils.authenticateJWT,AuthControllers.UserDetail);
 router.get('/fetchMatches',MatchControllers.fetchAllMatch);
 router.get('/fetchMatch/:mid',MatchControllers.fetchParticularMatch);
 router.post('/newTicket',TicketControllers.CreateTicket);
