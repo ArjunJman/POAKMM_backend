@@ -27,7 +27,6 @@ const ticketSchema = new mongoose.Schema(
         date:String,
         seat_no:Number,
         payment_date:String,
-        no_of_tickets:Number,
         match_id:String,
         email:String
     }

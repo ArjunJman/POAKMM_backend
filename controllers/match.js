@@ -34,7 +34,6 @@ const fetchParticularMatch = async (req,res) => {
 
 const EventData = async(req,res)=>
 {
-    
         try{
             const req_data = req.body
             const obj = new MatchModel(req_data)
@@ -44,8 +43,8 @@ const EventData = async(req,res)=>
            {
             res.status(500).send("Internal Server Error");
            }
-    
 }
+
 module.exports = {
     fetchAllMatch,
     fetchParticularMatch,
