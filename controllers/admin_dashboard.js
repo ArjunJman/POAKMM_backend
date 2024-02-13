@@ -24,8 +24,12 @@ const GetAdminDashboard = async (req,res) => {
             //console.log(all_tickets)
         }   
 
-        console.log(all_tickets);
-        await res.send(all_tickets);
+        const details = {
+            "total_users":total_users,
+            "total_tickets":total_tickets,
+            "all_tickets":all_tickets
+        }
+        await res.send(details);
     }
 }
 
