@@ -6,39 +6,44 @@ const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
 
-const CreateTicket = async (req,res) => {
-    try{
-        const Tickets = req.body
-        console.log(Tickets)
-        const booked_seats = []
-        var match_id;
 
-        for (ticket in Tickets['allTickets']){
-            const NewTick = Tickets['allTickets'][ticket]
-            console.log(NewTick)
-            booked_seats.push(NewTick['seat_no'])
-            match_id = NewTick['match_id']
-            const obj = new TicketModel(NewTick)
-            //await obj.save()
+const CreateTicket = async (req, res) => {
+    try {
+        const Tickets = req.body.allTickets;
+        console.log(Tickets);
+
+        let bookedSeats = [];
+        let matchId;
+
+        
+
+        for (const ticket of Tickets) {
+            const newTicket = ticket;
+            matchId = newTicket.match_id;
+            bookedSeats.push(newTicket.seat_no);
+            console.log(newTicket);
+            const obj = new TicketModel(newTicket);
+            // const result = await obj.save();
         }
-        console.log(booked_seats)
 
-        const Match = await MatchModel.findOne({'match_id':match_id})
-        console.log(Match)
-        var seats_in_match = JSON.parse(JSON.stringify(Match['seats']))
+        let matchData = await MatchModel.findOne({ 'match_id': matchId });
+        console.log(bookedSeats);
 
-        booked_seats.forEach((seat) => {
-            seats_in_match[seat] = false;
-        })
+        const allSeats = JSON.parse(JSON.stringify(matchData['seats']));
+        console.log(allSeats)
 
-        console.log(seats_in_match)
-        Match.seats = seats_in_match
-        await Match.save()
-        res.send("Tickets Added Successfully")
-    } catch(e)
-    {
-        console.log(e)
-     res.status(500).send("Internal Server Error");
+        bookedSeats.forEach((seat) => {
+            allSeats[seat] = false;
+        });
+
+        matchData.seats = allSeats;
+        await matchData.save();
+
+        console.log(matchData);
+        res.send("Tickets Added Successfully");
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
     }
 }
 
