@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express();
-const jwt = require('jsonwebtoken');
+const myRoute = require('./routes/allRoutes');
+
+
 const bodyParser = require('body-parser');
+
+app.use(express.json()); 
 const mongoose = require('mongoose')
 const UserControllers = require('./controllers/UserControllers')
 
