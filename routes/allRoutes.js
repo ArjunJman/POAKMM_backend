@@ -12,10 +12,10 @@ const router = Router();
 router.post('/login',AuthControllers.login);
 router.post('/register', AuthControllers.saveUser);
 router.get('/UserDetail',utils.authenticateJWT,AuthControllers.UserDetail);
-router.get('/fetchMatches',MatchControllers.fetchAllMatch);
-router.get('/fetchMatch/:mid',MatchControllers.fetchParticularMatch);
-router.post('/newTicket',TicketControllers.CreateTicket);
-router.post('/AddEvent',MatchControllers.EventData);
+router.get('/fetchMatches',utils.authenticateJWT,MatchControllers.fetchAllMatch);
+router.get('/fetchMatch/:mid',utils.authenticateJWT,MatchControllers.fetchParticularMatch);
+router.post('/newTicket',utils.authenticateJWT,TicketControllers.CreateTicket);
+router.post('/AddEvent',utils.authenticateJWT,MatchControllers.EventData);
 router.get('/adminDash',utils.authenticateJWT,AdminDash.GetAdminDashboard);
 
 //internal
