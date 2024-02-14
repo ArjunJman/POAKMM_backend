@@ -38,7 +38,7 @@ const CreateTicket = async (req, res) => {
         await matchData.save();
 
         console.log(matchData);
-        res.send("Tickets Added Successfully");
+        res.send({message:"Tickets Added Successfully"});
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
