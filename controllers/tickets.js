@@ -9,18 +9,20 @@ mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).cat
 const CreateTicket = async (req, res) => {
     try {
         const Tickets = req.body.allTickets;
-        console.log(Tickets);
+        console.log("tickets",Tickets);
 
         let bookedSeats = [];
         let matchId;
 
         for (const ticket of Tickets) {
-            const newTicket = ticket;
+            var newTicket = ticket;
             matchId = newTicket.match_id;
             bookedSeats.push(newTicket.seat_no);
-            console.log(newTicket);
+            console.log("newticket",newTicket);
+            newTicket.id = Math.random()
+            newTicket.email = req.user.email
             const obj = new TicketModel(newTicket);
-            // const result = await obj.save();
+            await obj.save();
         }
 // update the book tickets in match collection
         let matchData = await MatchModel.findOne({ 'match_id': matchId });

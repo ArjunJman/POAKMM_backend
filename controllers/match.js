@@ -27,9 +27,9 @@ const fetchParticularMatch = async (req,res) => {
     console.log("inside")
     try{
         const match_id = req.params.mid;
-        console.log(match_id);
+        
         const data = await MatchModel.find({'match_id':match_id})
-        console.log(data);
+        
         res.send(data)
     }
     catch(e)
@@ -39,7 +39,7 @@ const fetchParticularMatch = async (req,res) => {
 }
 
 
-// Adding Event in the Database
+// Adding Event in the Database 
 const EventData = async(req,res)=>
 {
         try{

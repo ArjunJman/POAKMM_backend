@@ -2,7 +2,7 @@
 //dependenciies
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
-const { UserModel,TicketModel }  = require('../models/Models')
+const { MatchModel,UserModel,TicketModel }  = require('../models/Models')
 
 
 // MongoConnect
@@ -55,10 +55,35 @@ const login = async (req,res) => {
 
 // send UserDetail to Front
 const UserDetail = async (req,res) => {
-    if (req.user){
-        const ticket_details = await TicketModel.find({"email":req.user.email})
-        res.send(ticket_details)
+    try{
+        if (req.user){
+            console.log(req.user.email)
+            const ticket_details = await TicketModel.find({"email":req.user.email})
+            
+            var TicketDetails = []
+            for (ticket in ticket_details){
+                console.log("inn")
+                var ticketDataToBeSent = JSON.parse(JSON.stringify(ticket_details[ticket]))
+                const match_id = ticket_details[ticket].match_id
+                
+                let matchData = await MatchModel.findOne({ 'match_id': match_id });
+                console.log(matchData.venue)
+                // ticketDataToBeSent.match_id = match_id
+                ticketDataToBeSent.match_name = matchData.name
+                console.log("INin")
+                ticketDataToBeSent.venue = matchData.venue
+                console.log(ticketDataToBeSent)
+
+                TicketDetails.push(ticketDataToBeSent)
+
+            }
+            res.send(TicketDetails)
+        }
     }
+    catch{
+        res.send({message:"Error sending data!"})
+    }
+    
 }
 
 module.exports = {
