@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+//User
 const userSchema = new mongoose.Schema(
     {
         email:String,
@@ -8,6 +9,7 @@ const userSchema = new mongoose.Schema(
     }
 )
 
+//Event
 const MatchSchma = new mongoose.Schema(
     {
         match_id:String,
@@ -21,6 +23,7 @@ const MatchSchma = new mongoose.Schema(
     }
 )
 
+//Ticket
 const ticketSchema = new mongoose.Schema(
     {
         id:String,

@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
-const { UserModel, MatchModel, TicketModel } = require('../models/Models')
+const { MatchModel} = require('../models/Models')
 
+//authencticate access token everytime
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
   console.log(authHeader)
@@ -23,6 +24,7 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
+// Internal tool to popoulate match collections
 const AddDataRecursively = async (req, res) => {
   try {
     const Match_data = req.body

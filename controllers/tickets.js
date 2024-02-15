@@ -1,12 +1,11 @@
-const jwt = require('jsonwebtoken');
-const accessTokenSecret = 'youraccesstokensecret';
-const { UserModel,MatchModel,TicketModel }  = require('../models/Models')
+const { MatchModel,TicketModel }  = require('../models/Models')
 
 const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
 
 
+//Booked Tickets
 const CreateTicket = async (req, res) => {
     try {
         const Tickets = req.body.allTickets;
@@ -23,7 +22,7 @@ const CreateTicket = async (req, res) => {
             const obj = new TicketModel(newTicket);
             // const result = await obj.save();
         }
-
+// update the book tickets in match collection
         let matchData = await MatchModel.findOne({ 'match_id': matchId });
         console.log(bookedSeats);
 

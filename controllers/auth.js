@@ -1,17 +1,24 @@
+
+//dependenciies
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
 const { UserModel,TicketModel }  = require('../models/Models')
 
+
+// MongoConnect
 const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
 
+
+
+//SignUp
 const saveUser = async (req,res)=>
 {
     try{
         const req_data = req.body
         const obj = new UserModel(req_data)
-        const result = await obj.save()
+        await obj.save()
         res.send("User Added Successfully")
         } catch(e)
        {
@@ -19,6 +26,8 @@ const saveUser = async (req,res)=>
        }
 }
 
+
+// Login
 const login = async (req,res) => {
     const data = await UserModel.find()
     // Read username and password from request body
@@ -29,6 +38,8 @@ const login = async (req,res) => {
     const user = await data.find(u => { return u.username === username && u.password === password });
     console.log(user);
 
+
+    // Validating the token
     if (user) {
         // Generate an access token
         const accessToken = jwt.sign({ username: user.username,email: user.email }, accessTokenSecret);
@@ -41,6 +52,8 @@ const login = async (req,res) => {
     }
 }
 
+
+// send UserDetail to Front
 const UserDetail = async (req,res) => {
     if (req.user){
         const ticket_details = await TicketModel.find({"email":req.user.email})

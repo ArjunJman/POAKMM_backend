@@ -1,11 +1,14 @@
-const jwt = require('jsonwebtoken');
-const accessTokenSecret = 'youraccesstokensecret';
-const { UserModel,MatchModel }  = require('../models/Models')
+// dependencies
+const {MatchModel }  = require('../models/Models')
 
+
+//MongoDB
 const mongoose = require('mongoose')
 const conn_str = "mongodb+srv://aiarjun027:arjun1234@cluster0.beh4ixw.mongodb.net/POAKMM?retryWrites=true&w=majority"
 mongoose.connect(conn_str).then(()=> console.log("Connected Successsfully")).catch((err)=> console.log(err))
 
+
+//gets Event Details from the Database
 
 const fetchAllMatch = async (req,res) => {
     try{
@@ -18,6 +21,8 @@ const fetchAllMatch = async (req,res) => {
        }
 }
 
+
+// fetch throughparticular id
 const fetchParticularMatch = async (req,res) => {
     console.log("inside")
     try{
@@ -34,6 +39,7 @@ const fetchParticularMatch = async (req,res) => {
 }
 
 
+// Adding Event in the Database
 const EventData = async(req,res)=>
 {
         try{
