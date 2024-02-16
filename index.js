@@ -14,7 +14,7 @@ app.use('/api', myRoute);
 
 
 app.use('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 })
 
 
