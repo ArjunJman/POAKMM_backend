@@ -2,7 +2,7 @@
 This repository contains the code for a Ticket Event Planning Application. The application allows users to manage events, book tickets, and handle various event-related tasks. Below, I’ll provide an overview of the functionalities implemented using the provided routes.
 
 ## Routes and Functionalities
-- /login: Handles user authentication. Users can log in to access the application.
+- ```/login```: Handles user authentication. Users can log in to access the application.
 - /register: Allows new users to register and create an account.
 - /UserDetail: Retrieves user details after successful authentication.
 - /fetchMatches: Fetches information about all available matches or events.
