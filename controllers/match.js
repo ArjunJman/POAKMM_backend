@@ -41,16 +41,21 @@ const fetchParticularMatch = async (req,res) => {
 
 // Adding Event in the Database 
 const EventData = async(req,res)=>
-{
-        try{
-            const req_data = req.body
-            const obj = new MatchModel(req_data)
-            const result = await obj.save()
-            res.send({message:"Event Added Successfully"})
-            } catch(e)
-           {
-            res.status(500).send("Internal Server Error");
-           }
+{       
+        if(req.user.email == "om@gmail.com"){
+            try{
+                const req_data = req.body
+                const obj = new MatchModel(req_data)
+                const result = await obj.save()
+                res.send({message:"Event Added Successfully"})
+                } catch(e)
+               {
+                res.status(500).send("Internal Server Error");
+               }
+        } else {
+            res.send({message:"you are not admin!"})
+        }
+        
 }
 
 module.exports = {

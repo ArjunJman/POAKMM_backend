@@ -43,7 +43,6 @@ const login = async (req,res) => {
     if (user) {
         // Generate an access token
         const accessToken = jwt.sign({ username: user.username,email: user.email }, accessTokenSecret);
-        console.log(accessToken)
         res.json({
             accessToken
         });
