@@ -1,11 +1,10 @@
 const jwt = require('jsonwebtoken');
 const accessTokenSecret = 'youraccesstokensecret';
-const { MatchModel} = require('../models/Models')
+const { MatchModel } = require('../models/Models')
 
 //authencticate access token everytime
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  console.log(authHeader)
 
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1];
@@ -29,7 +28,6 @@ const AddDataRecursively = async (req, res) => {
     const Match_data = req.body
     for (Match in Match_data['allMatches']) {
       const NewMatch = Match_data['allMatches'][Match]
-      console.log(NewMatch)
       const obj = new MatchModel(NewMatch)
       const result = await obj.save()
     }
