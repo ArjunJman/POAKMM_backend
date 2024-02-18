@@ -11,7 +11,7 @@ const CreateTicket = async (req, res) => {
             var newTicket = ticket;
             matchId = newTicket.match_id;
             bookedSeats.push(newTicket.seat_no);
-            newTicket.id = Math.flooer(Math.random())
+            newTicket.id = Math.floor(Math.random())
             newTicket.email = req.user.email
             const obj = new TicketModel(newTicket);
             await obj.save();
