@@ -12,19 +12,7 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [
-				{
-					"dataset": {
-						"referenceName": "AzureSqlTable8",
-						"type": "DatasetReference"
-					},
-					"name": "sink1",
-					"rejectedDataLinkedService": {
-						"referenceName": "AzureBlobStorage1",
-						"type": "LinkedServiceReference"
-					}
-				}
-			],
+			"sinks": [],
 			"transformations": [
 				{
 					"name": "select1"
@@ -52,17 +40,7 @@
 				"     skipDuplicateMapOutputs: true) ~> select1",
 				"select1 filter(match_id>3) ~> filter1",
 				"filter1 aggregate(groupBy(match_id),",
-				"     venue_id = count(match_id)) ~> aggregate1",
-				"aggregate1 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     venue_id = count(match_id)) ~> aggregate1"
 			]
 		}
 	}
