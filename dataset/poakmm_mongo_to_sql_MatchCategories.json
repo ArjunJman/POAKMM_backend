@@ -1,0 +1,16 @@
+{
+	"name": "poakmm_mongo_to_sql_MatchCategories",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase4",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "staging",
+			"table": "matchCategories"
+		}
+	}
+}

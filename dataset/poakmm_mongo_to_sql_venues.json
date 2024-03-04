@@ -1,15 +1,16 @@
 {
-	"name": "poakmm_mongodb_ds_Bookings",
+	"name": "poakmm_mongo_to_sql_venues",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "POAKMM_MONGO_LS",
+			"referenceName": "AzureSqlDatabase4",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
-		"type": "MongoDbAtlasCollection",
+		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"collection": "Bookings"
+			"schema": "staging",
+			"table": "venues"
 		}
 	}
 }

@@ -5,11 +5,6 @@
 			"referenceName": "ls_poakmm_azure_sqldb",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"tableName": {
-				"type": "string"
-			}
-		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": []
