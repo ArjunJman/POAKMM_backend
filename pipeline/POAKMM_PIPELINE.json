@@ -5,6 +5,8 @@
 			{
 				"name": "get table names",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -36,6 +38,8 @@
 			{
 				"name": "get each db name",
 				"type": "ForEach",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "get table names",
@@ -129,7 +133,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "METRICS",
 						"type": "DataFlowReference"
 					},
 					"compute": {

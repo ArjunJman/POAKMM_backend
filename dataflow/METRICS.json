@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "METRICS",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -61,7 +61,14 @@
 						"referenceName": "Result_for_pokamm_metrics",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "NoOfTicketsPerUser"
+				},
+				{
+					"dataset": {
+						"referenceName": "Result_for_pokamm_metrics",
+						"type": "DatasetReference"
+					},
+					"name": "TotalRevenueGeneratedPerson"
 				}
 			],
 			"transformations": [
@@ -78,10 +85,10 @@
 					"name": "TotalRevenuePerUser"
 				},
 				{
-					"name": "join2"
+					"name": "joiningCustomerName2"
 				},
 				{
-					"name": "select2"
+					"name": "NecessaryFields2"
 				},
 				{
 					"name": "MostPopularVenues"
@@ -209,8 +216,8 @@
 				"     joinType:'left',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join2",
-				"join2 select(mapColumn(",
+				"     broadcast: 'auto')~> joiningCustomerName2",
+				"joiningCustomerName2 select(mapColumn(",
 				"          customer_id = TotalRevenuePerUser@customer_id,",
 				"          Total_revenue,",
 				"          customer_id = Customers@customer_id,",
@@ -218,7 +225,7 @@
 				"          customer_email",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
+				"     skipDuplicateMapOutputs: true) ~> NecessaryFields2",
 				"Matches aggregate(groupBy(venue_id),",
 				"     total_event_happened = count(match_id)) ~> MostPopularVenues",
 				"MostPopularVenues, Venues join(MostPopularVenues@venue_id == Venues@venue_id,",
@@ -270,10 +277,21 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
+				"     recreate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> NoOfTicketsPerUser",
+				"NecessaryFields2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> TotalRevenueGeneratedPerson"
 			]
 		}
 	}

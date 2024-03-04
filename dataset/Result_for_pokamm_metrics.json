@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "No_of_tickets_per_user"
+			"table": "TotalRevenuePerUser"
 		}
 	}
 }
