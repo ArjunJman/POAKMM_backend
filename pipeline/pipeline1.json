@@ -3,87 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
-				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [
-					{
-						"activity": "get table names",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "MongoDbAtlasSource",
-						"batchSize": 100
-					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false,
-						"tableOption": "autoCreate",
-						"disableMetricsCollection": false
-					},
-					"enableStaging": false
-				},
-				"inputs": [
-					{
-						"referenceName": "poakmm_mongodb_ds_Bookings",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "get table names",
-				"type": "Lookup",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"typeProperties": {
-					"source": {
-						"type": "JsonSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
-						},
-						"formatSettings": {
-							"type": "JsonReadSettings"
-						}
-					},
-					"dataset": {
-						"referenceName": "db_config_json",
-						"type": "DatasetReference"
-					},
-					"firstRowOnly": false
-				}
-			},
-			{
-				"name": "Copy data2",
+				"name": "booking copy",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -172,13 +92,11 @@
 				]
 			},
 			{
-				"name": "Copy data2_copy1",
+				"name": "matches copy",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data2",
+						"activity": "booking copy",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -265,13 +183,11 @@
 				]
 			},
 			{
-				"name": "Copy data3",
+				"name": "venues copy",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data2_copy1",
+						"activity": "matches copy",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -342,13 +258,11 @@
 				]
 			},
 			{
-				"name": "Copy data4",
+				"name": "customers copy",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data3",
+						"activity": "venues copy",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -419,13 +333,11 @@
 				]
 			},
 			{
-				"name": "Copy data5",
+				"name": "matchcategory copy",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Copy data4",
+						"activity": "customers copy",
 						"dependencyConditions": [
 							"Succeeded"
 						]
