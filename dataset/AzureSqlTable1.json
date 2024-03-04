@@ -1,0 +1,40 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "match_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "match_date",
+				"type": "date"
+			},
+			{
+				"name": "venue_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "category_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "match_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Matches"
+		}
+	}
+}

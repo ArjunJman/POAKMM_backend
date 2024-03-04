@@ -1,0 +1,41 @@
+{
+	"name": "Booking",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "booking_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "customer_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "match_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "seat_number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "price",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Bookings"
+		}
+	}
+}

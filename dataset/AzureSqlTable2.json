@@ -1,0 +1,30 @@
+{
+	"name": "AzureSqlTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "venue_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "venue_name",
+				"type": "varchar"
+			},
+			{
+				"name": "venue_location",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Venues"
+		}
+	}
+}
