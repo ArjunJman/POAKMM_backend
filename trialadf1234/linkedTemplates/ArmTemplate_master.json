@@ -43,9 +43,29 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase3'"
 		},
+		"AzureSqlDatabase4_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase4'"
+		},
+		"AzureSqlDatabase5_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase5'"
+		},
+		"AzureSqlDatabase_samp1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase_samp1'"
+		},
 		"MongoDbAtlas1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'MongoDbAtlas1'"
+		},
+		"MongoDbAtlas2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'MongoDbAtlas2'"
+		},
+		"POAKMM_MONGO_LS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'POAKMM_MONGO_LS'"
 		},
 		"Poakmm_database_connectionString": {
 			"type": "secureString",
@@ -81,9 +101,17 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_configs_ab'"
 		},
+		"ls_poakmm_azure_sqldb_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ls_poakmm_azure_sqldb'"
+		},
 		"ls_sink_azdb_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_sink_azdb'"
+		},
+		"poakmm_database_azure_ls_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'poakmm_database_azure_ls'"
 		},
 		"AzureFunction1_properties_typeProperties_functionAppUrl": {
 			"type": "string",
@@ -98,6 +126,14 @@
 			"defaultValue": "https://transformsql.azurewebsites.net"
 		},
 		"MongoDbAtlas1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "ADF_POAKMM"
+		},
+		"MongoDbAtlas2_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "ADF_POAKMM"
+		},
+		"POAKMM_MONGO_LS_properties_typeProperties_database": {
 			"type": "string",
 			"defaultValue": "ADF_POAKMM"
 		},
@@ -163,8 +199,23 @@
 					"AzureSqlDatabase3_connectionString": {
 						"value": "[parameters('AzureSqlDatabase3_connectionString')]"
 					},
+					"AzureSqlDatabase4_connectionString": {
+						"value": "[parameters('AzureSqlDatabase4_connectionString')]"
+					},
+					"AzureSqlDatabase5_connectionString": {
+						"value": "[parameters('AzureSqlDatabase5_connectionString')]"
+					},
+					"AzureSqlDatabase_samp1_connectionString": {
+						"value": "[parameters('AzureSqlDatabase_samp1_connectionString')]"
+					},
 					"MongoDbAtlas1_connectionString": {
 						"value": "[parameters('MongoDbAtlas1_connectionString')]"
+					},
+					"MongoDbAtlas2_connectionString": {
+						"value": "[parameters('MongoDbAtlas2_connectionString')]"
+					},
+					"POAKMM_MONGO_LS_connectionString": {
+						"value": "[parameters('POAKMM_MONGO_LS_connectionString')]"
 					},
 					"Poakmm_database_connectionString": {
 						"value": "[parameters('Poakmm_database_connectionString')]"
@@ -175,8 +226,8 @@
 					"ls_configs_ab_connectionString": {
 						"value": "[parameters('ls_configs_ab_connectionString')]"
 					},
-					"ls_sink_azdb_connectionString": {
-						"value": "[parameters('ls_sink_azdb_connectionString')]"
+					"ls_poakmm_azure_sqldb_connectionString": {
+						"value": "[parameters('ls_poakmm_azure_sqldb_connectionString')]"
 					},
 					"AzureFunction1_properties_typeProperties_functionAppUrl": {
 						"value": "[parameters('AzureFunction1_properties_typeProperties_functionAppUrl')]"
@@ -189,6 +240,12 @@
 					},
 					"MongoDbAtlas1_properties_typeProperties_database": {
 						"value": "[parameters('MongoDbAtlas1_properties_typeProperties_database')]"
+					},
+					"MongoDbAtlas2_properties_typeProperties_database": {
+						"value": "[parameters('MongoDbAtlas2_properties_typeProperties_database')]"
+					},
+					"POAKMM_MONGO_LS_properties_typeProperties_database": {
+						"value": "[parameters('POAKMM_MONGO_LS_properties_typeProperties_database')]"
 					}
 				}
 			},
@@ -202,6 +259,32 @@
 				"mode": "incremental",
 				"templateLink": {
 					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ls_sink_azdb_connectionString": {
+						"value": "[parameters('ls_sink_azdb_connectionString')]"
+					},
+					"poakmm_database_azure_ls_connectionString": {
+						"value": "[parameters('poakmm_database_azure_ls_connectionString')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'trialadf1234_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "trialadf1234_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
 					"contentVersion": "1.0.0.0"
 				},
 				"parameters": {
@@ -232,7 +315,7 @@
 				}
 			},
 			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'trialadf1234_ArmTemplate_0')]"
+				"[resourceId('Microsoft.Resources/deployments', 'trialadf1234_ArmTemplate_1')]"
 			]
 		}
 	]

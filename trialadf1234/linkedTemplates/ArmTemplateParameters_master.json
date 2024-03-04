@@ -32,7 +32,22 @@
 		"AzureSqlDatabase3_connectionString": {
 			"value": ""
 		},
+		"AzureSqlDatabase4_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase5_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase_samp1_connectionString": {
+			"value": ""
+		},
 		"MongoDbAtlas1_connectionString": {
+			"value": ""
+		},
+		"MongoDbAtlas2_connectionString": {
+			"value": ""
+		},
+		"POAKMM_MONGO_LS_connectionString": {
 			"value": ""
 		},
 		"Poakmm_database_connectionString": {
@@ -59,7 +74,13 @@
 		"ls_configs_ab_connectionString": {
 			"value": ""
 		},
+		"ls_poakmm_azure_sqldb_connectionString": {
+			"value": ""
+		},
 		"ls_sink_azdb_connectionString": {
+			"value": ""
+		},
+		"poakmm_database_azure_ls_connectionString": {
 			"value": ""
 		},
 		"AzureFunction1_properties_typeProperties_functionAppUrl": {
@@ -72,6 +93,12 @@
 			"value": "https://transformsql.azurewebsites.net"
 		},
 		"MongoDbAtlas1_properties_typeProperties_database": {
+			"value": "ADF_POAKMM"
+		},
+		"MongoDbAtlas2_properties_typeProperties_database": {
+			"value": "ADF_POAKMM"
+		},
+		"POAKMM_MONGO_LS_properties_typeProperties_database": {
 			"value": "ADF_POAKMM"
 		},
 		"SqlServer2_properties_typeProperties_userName": {
