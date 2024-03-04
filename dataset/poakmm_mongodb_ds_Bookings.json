@@ -1,5 +1,5 @@
 {
-	"name": "poakmm_mongodb_ds",
+	"name": "poakmm_mongodb_ds_Bookings",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "POAKMM_MONGO_LS",
@@ -12,6 +12,9 @@
 		},
 		"annotations": [],
 		"type": "MongoDbAtlasCollection",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"collection": "Bookings"
+		}
 	}
 }

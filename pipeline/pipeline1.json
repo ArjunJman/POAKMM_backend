@@ -39,7 +39,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "poakmm_mongodb_ds",
+						"referenceName": "poakmm_mongodb_ds_Bookings",
 						"type": "DatasetReference",
 						"parameters": {
 							"collectionName": {
@@ -51,7 +51,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "POAKMM_MONGO_TO_SQL",
+						"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
 						"type": "DatasetReference",
 						"parameters": {
 							"tableName": {
@@ -65,6 +65,8 @@
 			{
 				"name": "get table names",
 				"type": "Lookup",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -91,6 +93,51 @@
 					},
 					"firstRowOnly": false
 				}
+			},
+			{
+				"name": "Copy data2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "MongoDbAtlasSource",
+						"batchSize": 100
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "poakmm_mongodb_ds_Bookings",
+						"type": "DatasetReference",
+						"parameters": {
+							"collectionName": "Bookings"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": "Bookings"
+						}
+					}
+				]
 			}
 		],
 		"variables": {

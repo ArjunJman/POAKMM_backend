@@ -1,8 +1,8 @@
 {
-	"name": "POAKMM_MONGO_TO_SQL",
+	"name": "POAKMM_MONGO_TO_SQL_Bookings",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase5",
+			"referenceName": "ls_poakmm_azure_sqldb",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
