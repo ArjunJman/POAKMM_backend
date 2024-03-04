@@ -53,6 +53,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "Bookings3"
+				},
+				{
+					"name": "source1"
 				}
 			],
 			"sinks": [],
@@ -180,6 +183,8 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> Bookings3",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1",
 				"Booking aggregate(groupBy(customer_id),",
 				"     Number_of_tickets_by_customer = count(booking_id)) ~> NoOfTicketsByUser",
 				"NoOfTicketsByUser, Customers join(NoOfTicketsByUser@customer_id == Customers@customer_id,",
