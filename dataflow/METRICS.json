@@ -61,14 +61,35 @@
 						"referenceName": "Result_for_pokamm_metrics",
 						"type": "DatasetReference"
 					},
-					"name": "NoOfTicketsPerUser"
+					"name": "sink1"
 				},
 				{
 					"dataset": {
 						"referenceName": "Result_for_pokamm_metrics",
 						"type": "DatasetReference"
 					},
-					"name": "TotalRevenueGeneratedPerson"
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Result_for_pokamm_metrics",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "Result_for_pokamm_metrics",
+						"type": "DatasetReference"
+					},
+					"name": "sink4"
+				},
+				{
+					"dataset": {
+						"referenceName": "Result_for_pokamm_metrics",
+						"type": "DatasetReference"
+					},
+					"name": "sink5"
 				}
 			],
 			"transformations": [
@@ -94,10 +115,10 @@
 					"name": "MostPopularVenues"
 				},
 				{
-					"name": "join3"
+					"name": "JoiningVenues2"
 				},
 				{
-					"name": "select3"
+					"name": "NecessaryFields3"
 				},
 				{
 					"name": "MostBookedSeat"
@@ -232,15 +253,15 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join3",
-				"join3 select(mapColumn(",
+				"     broadcast: 'auto')~> JoiningVenues2",
+				"JoiningVenues2 select(mapColumn(",
 				"          venue_id = Venues@venue_id,",
 				"          venue_name,",
 				"          venue_location,",
 				"          total_event_happened",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3",
+				"     skipDuplicateMapOutputs: true) ~> NecessaryFields3",
 				"Booking2 aggregate(groupBy(seat_number),",
 				"     count = count(booking_id)) ~> MostBookedSeat",
 				"MostBookedSeat rank(desc(count, true),",
@@ -277,11 +298,10 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
-				"     recreate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> NoOfTicketsPerUser",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
 				"NecessaryFields2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -291,7 +311,37 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> TotalRevenueGeneratedPerson"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+				"NecessaryFields3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink3",
+				"rank1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink4",
+				"TopMatches sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink5"
 			]
 		}
 	}
