@@ -1,5 +1,5 @@
 {
-	"name": "Result_for_pokamm_metrics",
+	"name": "AzureSqlTable5",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzDB",
@@ -10,7 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "NumberOfTicketsPerUser"
+			"table": "TotalRevenuePerUser"
 		}
 	}
 }

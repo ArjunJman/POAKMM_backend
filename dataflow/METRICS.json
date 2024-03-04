@@ -61,35 +61,35 @@
 						"referenceName": "Result_for_pokamm_metrics",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "TicketsPerUser"
 				},
 				{
 					"dataset": {
-						"referenceName": "Result_for_pokamm_metrics",
+						"referenceName": "AzureSqlTable5",
 						"type": "DatasetReference"
 					},
-					"name": "sink2"
+					"name": "RevenuePerUser"
 				},
 				{
 					"dataset": {
-						"referenceName": "Result_for_pokamm_metrics",
+						"referenceName": "AzureSqlTable6",
 						"type": "DatasetReference"
 					},
-					"name": "sink3"
+					"name": "MostPopularVenue"
 				},
 				{
 					"dataset": {
-						"referenceName": "Result_for_pokamm_metrics",
+						"referenceName": "AzureSqlTable7",
 						"type": "DatasetReference"
 					},
-					"name": "sink4"
+					"name": "MostBookedSeats"
 				},
 				{
 					"dataset": {
-						"referenceName": "Result_for_pokamm_metrics",
+						"referenceName": "AzureSqlTable8",
 						"type": "DatasetReference"
 					},
-					"name": "sink5"
+					"name": "MostPopularMatches"
 				}
 			],
 			"transformations": [
@@ -301,7 +301,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"     errorHandlingOption: 'stopOnFirstError') ~> TicketsPerUser",
 				"NecessaryFields2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -311,7 +311,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+				"     errorHandlingOption: 'stopOnFirstError') ~> RevenuePerUser",
 				"NecessaryFields3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -321,7 +321,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink3",
+				"     errorHandlingOption: 'stopOnFirstError') ~> MostPopularVenue",
 				"rank1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -331,7 +331,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink4",
+				"     errorHandlingOption: 'stopOnFirstError') ~> MostBookedSeats",
 				"TopMatches sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -341,7 +341,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink5"
+				"     errorHandlingOption: 'stopOnFirstError') ~> MostPopularMatches"
 			]
 		}
 	}
