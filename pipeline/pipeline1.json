@@ -52,7 +52,13 @@
 				"outputs": [
 					{
 						"referenceName": "POAKMM_MONGO_TO_SQL",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": {
+								"value": "@activity('get table names').output.value",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			},
