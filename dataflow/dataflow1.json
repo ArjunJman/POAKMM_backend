@@ -55,16 +55,24 @@
 					"name": "Bookings3"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Result_for_pokamm_metrics",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "NoOfTicketsByUser"
 				},
 				{
-					"name": "join1"
+					"name": "joiningCustomerNames"
 				},
 				{
-					"name": "select1"
+					"name": "NecessaryFields1"
 				},
 				{
 					"name": "TotalRevenuePerUser"
@@ -186,15 +194,15 @@
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1",
-				"join1 select(mapColumn(",
+				"     broadcast: 'auto')~> joiningCustomerNames",
+				"joiningCustomerNames select(mapColumn(",
 				"          customer_id = Customers@customer_id,",
 				"          customer_name,",
 				"          Number_of_tickets_by_customer,",
 				"          customer_email",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
+				"     skipDuplicateMapOutputs: true) ~> NecessaryFields1",
 				"Booking1 aggregate(groupBy(customer_id),",
 				"     Total_revenue = sum(price)) ~> TotalRevenuePerUser",
 				"TotalRevenuePerUser, Customers join(TotalRevenuePerUser@customer_id == Customers@customer_id,",
@@ -255,7 +263,17 @@
 				"     skipDuplicateMapOutputs: true) ~> NecessaryFields",
 				"NecessaryFields rank(asc(Count_tickets, true),",
 				"     output(Rank as long),",
-				"     dense: true) ~> TopMatches"
+				"     dense: true) ~> TopMatches",
+				"NecessaryFields1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}

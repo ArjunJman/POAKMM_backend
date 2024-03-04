@@ -1,0 +1,16 @@
+{
+	"name": "Result_for_pokamm_metrics",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzDB",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "No_of_tickets_per_user"
+		}
+	}
+}
