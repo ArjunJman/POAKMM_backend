@@ -1,0 +1,90 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "trialadf1234"
+		},
+		"AzDB_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureFunction1_functionKey": {
+			"value": ""
+		},
+		"AzureFunction2_functionKey": {
+			"value": ""
+		},
+		"AzureFunction3_functionKey": {
+			"value": ""
+		},
+		"AzureMySql1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase3_connectionString": {
+			"value": ""
+		},
+		"MongoDbAtlas1_connectionString": {
+			"value": ""
+		},
+		"Poakmm_database_connectionString": {
+			"value": ""
+		},
+		"SqlServer1_connectionString": {
+			"value": ""
+		},
+		"SqlServer2_connectionString": {
+			"value": "Integrated Security=True;Data Source=DESKTOP-663P1AJ;Initial Catalog=gravity_books"
+		},
+		"SqlServer2_password": {
+			"value": ""
+		},
+		"SqlServer3_connectionString": {
+			"value": ""
+		},
+		"SqlServer4_connectionString": {
+			"value": "Integrated Security=True;Data Source=DESKTOP-663P1AJ;Initial Catalog=poakmm"
+		},
+		"SqlServer4_password": {
+			"value": ""
+		},
+		"ls_configs_ab_connectionString": {
+			"value": ""
+		},
+		"ls_sink_azdb_connectionString": {
+			"value": ""
+		},
+		"AzureFunction1_properties_typeProperties_functionAppUrl": {
+			"value": "https://transformsql.azurewebsites.net/api/http_trigger"
+		},
+		"AzureFunction2_properties_typeProperties_functionAppUrl": {
+			"value": "https://transformsql.azurewebsites.net"
+		},
+		"AzureFunction3_properties_typeProperties_functionAppUrl": {
+			"value": "https://transformsql.azurewebsites.net"
+		},
+		"MongoDbAtlas1_properties_typeProperties_database": {
+			"value": "ADF_POAKMM"
+		},
+		"SqlServer2_properties_typeProperties_userName": {
+			"value": "AzureAD\\ArjunP"
+		},
+		"SqlServer4_properties_typeProperties_userName": {
+			"value": "AzureAD\\ArjunP"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
