@@ -1,0 +1,16 @@
+{
+	"name": "SqlServer3",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=False;data source=DESKTOP-663P1AJ;initial catalog=poakmm;user id=AzureAD\\ArjunP",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlNjRiOGFiOC0yYzE3LTQ0YTktODFjZi0wOTUwMzE5Y2NhNjgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntimeSelfHosted1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
