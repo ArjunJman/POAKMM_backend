@@ -2,7 +2,7 @@
 	"name": "Booking",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzDB",
+			"referenceName": "poakmm_database_azure_ls",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
@@ -34,7 +34,7 @@
 			}
 		],
 		"typeProperties": {
-			"schema": "dbo",
+			"schema": "staging",
 			"table": "Bookings"
 		}
 	}

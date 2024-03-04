@@ -115,7 +115,8 @@
 									"path": "$['booking_id']['$numberInt']"
 								},
 								"sink": {
-									"name": "booking_id"
+									"name": "booking_id",
+									"type": "Int32"
 								}
 							},
 							{
@@ -123,7 +124,8 @@
 									"path": "$['customer_id']['$numberInt']"
 								},
 								"sink": {
-									"name": "customer_id"
+									"name": "customer_id",
+									"type": "Int32"
 								}
 							},
 							{
@@ -131,7 +133,8 @@
 									"path": "$['match_id']['$numberInt']"
 								},
 								"sink": {
-									"name": "match_id"
+									"name": "match_id",
+									"type": "Int32"
 								}
 							},
 							{
@@ -139,7 +142,8 @@
 									"path": "$['seat_number']['$numberInt']"
 								},
 								"sink": {
-									"name": "seat_number"
+									"name": "seat_number",
+									"type": "Int32"
 								}
 							},
 							{
@@ -147,7 +151,8 @@
 									"path": "$['price']['$numberInt']"
 								},
 								"sink": {
-									"name": "price"
+									"name": "price",
+									"type": "String"
 								}
 							}
 						]
@@ -161,7 +166,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "bookings_table",
+						"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
 						"type": "DatasetReference"
 					}
 				]
@@ -169,6 +174,8 @@
 			{
 				"name": "Copy data2_copy1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data2",
@@ -260,6 +267,8 @@
 			{
 				"name": "Copy data3",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data2_copy1",
@@ -335,6 +344,8 @@
 			{
 				"name": "Copy data4",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data3",
@@ -410,6 +421,8 @@
 			{
 				"name": "Copy data5",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Copy data4",

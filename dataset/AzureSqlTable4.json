@@ -2,15 +2,11 @@
 	"name": "AzureSqlTable4",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDatabase_samp1",
+			"referenceName": "AzureSqlDatabase4",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
-		"typeProperties": {
-			"schema": "Rev1",
-			"table": "rev"
-		}
+		"schema": []
 	}
 }

@@ -2,11 +2,15 @@
 	"name": "POAKMM_MONGO_TO_SQL_Bookings",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "ls_poakmm_azure_sqldb",
+			"referenceName": "AzureSqlDatabase4",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": []
+		"schema": [],
+		"typeProperties": {
+			"schema": "staging",
+			"table": "Bookings"
+		}
 	}
 }
