@@ -1,0 +1,17 @@
+{
+	"name": "poakmm_mongodb_ds",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "POAKMM_MONGO_LS",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"collectionName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "MongoDbAtlasCollection",
+		"schema": []
+	}
+}
