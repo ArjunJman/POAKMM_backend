@@ -1,0 +1,14 @@
+{
+	"name": "MongoDbAtlas2",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "MongoDbAtlas",
+		"typeProperties": {
+			"connectionString": "mongodb+srv://aiarjun027:@cluster0.beh4ixw.mongodb.net/?appname=Cluster0;w=majority;retryWrites=true",
+			"database": "ADF_POAKMM",
+			"driverVersion": "v2",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDRGOTAzNjc0LTlDMTUtNEY5Qi1CNzZGLTYwMzRDMEJDMkI0Rl84YzZmMDhjZC04OTRjLTRkMDUtOWQ2Ny02MDRhYjRiZWE5YWYiDQp9"
+		}
+	}
+}
