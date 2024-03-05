@@ -865,6 +865,9 @@
 						},
 						{
 							"name": "TopMatches"
+						},
+						{
+							"name": "TypeCasting1"
 						}
 					],
 					"scriptLines": [
@@ -893,7 +896,7 @@
 						"          customer_id as integer,",
 						"          match_id as integer,",
 						"          seat_number as integer,",
-						"          price as integer",
+						"          price as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -956,7 +959,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> NecessaryFields1",
-						"Booking1 aggregate(groupBy(customer_id),",
+						"TypeCasting1 aggregate(groupBy(customer_id),",
 						"     Total_revenue = sum(price)) ~> TotalRevenuePerUser",
 						"TotalRevenuePerUser, Customers join(TotalRevenuePerUser@customer_id == Customers@customer_id,",
 						"     joinType:'left',",
@@ -1017,6 +1020,14 @@
 						"NecessaryFields rank(asc(Count_tickets, true),",
 						"     output(Rank as long),",
 						"     dense: true) ~> TopMatches",
+						"Booking1 cast(output(",
+						"          booking_id as integer,",
+						"          customer_id as integer,",
+						"          match_id as integer,",
+						"          seat_number as integer,",
+						"          price as integer",
+						"     ),",
+						"     errors: true) ~> TypeCasting1",
 						"NecessaryFields1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
