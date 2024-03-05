@@ -457,6 +457,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/mongodb_revenueperuser')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "revenuePerUser"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/poakmm_mongo_to_sql_MatchCategories')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -471,25 +492,6 @@
 				"typeProperties": {
 					"schema": "staging",
 					"table": "matchCategories"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/poakmm_mongo_to_sql_customers')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase4",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "staging",
-					"table": "customers"
 				}
 			},
 			"dependsOn": []

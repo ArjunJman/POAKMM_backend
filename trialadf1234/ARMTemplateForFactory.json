@@ -829,6 +829,8 @@
 					{
 						"name": "matchcategory copy",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "customers copy",
@@ -1419,6 +1421,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/mongodb_revenueperuser')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "revenuePerUser"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/poakmm_mongo_to_sql_MatchCategories')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1600,6 +1623,90 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/POAKMM_MONGO_LS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostbookedseats')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "MostBookedSeats"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostpopularmatches')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "MostpopularMatches"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostpopularvenue')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "MostPopularVenue"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/result_for_poakmm_mongodb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "staging",
+					"table": "NoOfTicketPerUser"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
 			]
 		},
 		{
@@ -2743,111 +2850,6 @@
 				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_mostpopularvenue')]",
 				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_mostbookedseats')]",
 				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_mostpopularmatches')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/result_for_poakmm_mongodb')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "poakmm_database_azure_ls",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "transformed",
-					"table": "NoOfTicketPerUser"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/mongodb_revenueperuser')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "poakmm_database_azure_ls",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "transformed",
-					"table": "revenuePerUser"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostpopularvenue')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "poakmm_database_azure_ls",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "transformed",
-					"table": "MostPopularVenue"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostbookedseats')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "poakmm_database_azure_ls",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "transformed",
-					"table": "MostBookedSeats"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostpopularmatches')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "poakmm_database_azure_ls",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "transformed",
-					"table": "MostpopularMatches"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
 			]
 		}
 	]
