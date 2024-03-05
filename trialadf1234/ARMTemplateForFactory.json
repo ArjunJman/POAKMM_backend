@@ -483,6 +483,8 @@
 					{
 						"name": "booking copy",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -574,6 +576,8 @@
 					{
 						"name": "matches copy",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "booking copy",
@@ -667,6 +671,8 @@
 					{
 						"name": "venues copy",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "matches copy",
@@ -744,6 +750,8 @@
 					{
 						"name": "customers copy",
 						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "venues copy",
@@ -886,6 +894,46 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "METRICS_MONGODB",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "METRICS_MONGODB",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Booking": {},
+									"Customers": {},
+									"Booking1": {},
+									"Matches": {},
+									"Venues": {},
+									"Booking2": {},
+									"Bookings3": {},
+									"TicketsPerUser": {},
+									"RevenuePerUser": {},
+									"MostPopularVenue": {},
+									"MostBookedSeats": {},
+									"MostPopularMatches": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -909,7 +957,8 @@
 				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_ds_customers')]",
 				"[concat(variables('factoryId'), '/datasets/poakmm_mongo_to_sql_customers')]",
 				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_ds_MatchCategories')]",
-				"[concat(variables('factoryId'), '/datasets/poakmm_mongo_to_sql_MatchCategories')]"
+				"[concat(variables('factoryId'), '/datasets/poakmm_mongo_to_sql_MatchCategories')]",
+				"[concat(variables('factoryId'), '/dataflows/METRICS_MONGODB')]"
 			]
 		},
 		{
@@ -2322,6 +2371,483 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable6')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable7')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable8')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/METRICS_MONGODB')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
+								"type": "DatasetReference"
+							},
+							"name": "Booking"
+						},
+						{
+							"dataset": {
+								"referenceName": "poakmm_mongo_to_sql_customers",
+								"type": "DatasetReference"
+							},
+							"name": "Customers"
+						},
+						{
+							"dataset": {
+								"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
+								"type": "DatasetReference"
+							},
+							"name": "Booking1"
+						},
+						{
+							"dataset": {
+								"referenceName": "poakmm_mongo_to_sql_matches",
+								"type": "DatasetReference"
+							},
+							"name": "Matches"
+						},
+						{
+							"dataset": {
+								"referenceName": "poakmm_mongo_to_sql_venues",
+								"type": "DatasetReference"
+							},
+							"name": "Venues"
+						},
+						{
+							"dataset": {
+								"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
+								"type": "DatasetReference"
+							},
+							"name": "Booking2",
+							"description": "Booking2"
+						},
+						{
+							"dataset": {
+								"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
+								"type": "DatasetReference"
+							},
+							"name": "Bookings3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "result_for_poakmm_mongodb",
+								"type": "DatasetReference"
+							},
+							"name": "TicketsPerUser"
+						},
+						{
+							"dataset": {
+								"referenceName": "mongodb_revenueperuser",
+								"type": "DatasetReference"
+							},
+							"name": "RevenuePerUser"
+						},
+						{
+							"dataset": {
+								"referenceName": "poakmm_mongodb_mostpopularvenue",
+								"type": "DatasetReference"
+							},
+							"name": "MostPopularVenue"
+						},
+						{
+							"dataset": {
+								"referenceName": "poakmm_mongodb_mostbookedseats",
+								"type": "DatasetReference"
+							},
+							"name": "MostBookedSeats"
+						},
+						{
+							"dataset": {
+								"referenceName": "poakmm_mongodb_mostpopularmatches",
+								"type": "DatasetReference"
+							},
+							"name": "MostPopularMatches"
+						}
+					],
+					"transformations": [
+						{
+							"name": "NoOfTicketsByUser"
+						},
+						{
+							"name": "joiningCustomerNames"
+						},
+						{
+							"name": "NecessaryFields1"
+						},
+						{
+							"name": "TotalRevenuePerUser"
+						},
+						{
+							"name": "joiningCustomerName2"
+						},
+						{
+							"name": "NecessaryFields2"
+						},
+						{
+							"name": "MostPopularVenues"
+						},
+						{
+							"name": "JoiningVenues2"
+						},
+						{
+							"name": "NecessaryFields3"
+						},
+						{
+							"name": "MostBookedSeat"
+						},
+						{
+							"name": "rank1"
+						},
+						{
+							"name": "MostBookedMatch"
+						},
+						{
+							"name": "JoiningMatchName"
+						},
+						{
+							"name": "JoiningVenues"
+						},
+						{
+							"name": "NecessaryFields"
+						},
+						{
+							"name": "TopMatches"
+						},
+						{
+							"name": "TypeCasting1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          booking_id as integer,",
+						"          customer_id as integer,",
+						"          match_id as integer,",
+						"          seat_number as integer,",
+						"          price as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Booking",
+						"source(output(",
+						"          customer_id as integer,",
+						"          customer_name as string,",
+						"          customer_email as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Customers",
+						"source(output(",
+						"          booking_id as integer,",
+						"          customer_id as integer,",
+						"          match_id as integer,",
+						"          seat_number as integer,",
+						"          price as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Booking1",
+						"source(output(",
+						"          match_id as integer,",
+						"          match_date as string,",
+						"          venue_id as integer,",
+						"          category_id as string,",
+						"          match_name as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Matches",
+						"source(output(",
+						"          venue_id as integer,",
+						"          venue_name as string,",
+						"          venue_location as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Venues",
+						"source(output(",
+						"          booking_id as integer,",
+						"          customer_id as integer,",
+						"          match_id as integer,",
+						"          seat_number as integer,",
+						"          price as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Booking2",
+						"source(output(",
+						"          booking_id as integer,",
+						"          customer_id as integer,",
+						"          match_id as integer,",
+						"          seat_number as integer,",
+						"          price as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Bookings3",
+						"Booking aggregate(groupBy(customer_id),",
+						"     Number_of_tickets_by_customer = count(booking_id)) ~> NoOfTicketsByUser",
+						"NoOfTicketsByUser, Customers join(NoOfTicketsByUser@customer_id == Customers@customer_id,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> joiningCustomerNames",
+						"joiningCustomerNames select(mapColumn(",
+						"          customer_id = Customers@customer_id,",
+						"          customer_name,",
+						"          Number_of_tickets_by_customer,",
+						"          customer_email",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> NecessaryFields1",
+						"TypeCasting1 aggregate(groupBy(customer_id),",
+						"     Total_revenue = sum(price)) ~> TotalRevenuePerUser",
+						"TotalRevenuePerUser, Customers join(TotalRevenuePerUser@customer_id == Customers@customer_id,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> joiningCustomerName2",
+						"joiningCustomerName2 select(mapColumn(",
+						"          customer_id = TotalRevenuePerUser@customer_id,",
+						"          Total_revenue,",
+						"          customer_id = Customers@customer_id,",
+						"          customer_name,",
+						"          customer_email",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> NecessaryFields2",
+						"Matches aggregate(groupBy(venue_id),",
+						"     total_event_happened = count(match_id)) ~> MostPopularVenues",
+						"MostPopularVenues, Venues join(MostPopularVenues@venue_id == Venues@venue_id,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> JoiningVenues2",
+						"JoiningVenues2 select(mapColumn(",
+						"          venue_id = Venues@venue_id,",
+						"          venue_name,",
+						"          venue_location,",
+						"          total_event_happened",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> NecessaryFields3",
+						"Booking2 aggregate(groupBy(seat_number),",
+						"     count = count(booking_id)) ~> MostBookedSeat",
+						"MostBookedSeat rank(desc(count, true),",
+						"     output(Rank as long),",
+						"     dense: true) ~> rank1",
+						"Bookings3 aggregate(groupBy(match_id),",
+						"     Count_tickets = count(booking_id)) ~> MostBookedMatch",
+						"MostBookedMatch, Matches join(MostBookedMatch@match_id == Matches@match_id,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> JoiningMatchName",
+						"JoiningMatchName, Venues join(Matches@venue_id == Venues@venue_id,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> JoiningVenues",
+						"JoiningVenues select(mapColumn(",
+						"          match_id = MostBookedMatch@match_id,",
+						"          match_name,",
+						"          venue_name,",
+						"          venue_location,",
+						"          Count_tickets,",
+						"          match_date",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> NecessaryFields",
+						"NecessaryFields rank(asc(Count_tickets, true),",
+						"     output(Rank as long),",
+						"     dense: true) ~> TopMatches",
+						"Booking1 cast(output(",
+						"          booking_id as integer,",
+						"          customer_id as integer,",
+						"          match_id as integer,",
+						"          seat_number as integer,",
+						"          price as integer",
+						"     ),",
+						"     errors: true) ~> TypeCasting1",
+						"NecessaryFields1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> TicketsPerUser",
+						"NecessaryFields2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> RevenuePerUser",
+						"NecessaryFields3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> MostPopularVenue",
+						"rank1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> MostBookedSeats",
+						"TopMatches sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> MostPopularMatches"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/POAKMM_MONGO_TO_SQL_Bookings')]",
+				"[concat(variables('factoryId'), '/datasets/poakmm_mongo_to_sql_customers')]",
+				"[concat(variables('factoryId'), '/datasets/poakmm_mongo_to_sql_matches')]",
+				"[concat(variables('factoryId'), '/datasets/poakmm_mongo_to_sql_venues')]",
+				"[concat(variables('factoryId'), '/datasets/result_for_poakmm_mongodb')]",
+				"[concat(variables('factoryId'), '/datasets/mongodb_revenueperuser')]",
+				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_mostpopularvenue')]",
+				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_mostbookedseats')]",
+				"[concat(variables('factoryId'), '/datasets/poakmm_mongodb_mostpopularmatches')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/result_for_poakmm_mongodb')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "transformed",
+					"table": "NoOfTicketPerUser"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mongodb_revenueperuser')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "transformed",
+					"table": "revenuePerUser"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostpopularvenue')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "transformed",
+					"table": "MostPopularVenue"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostbookedseats')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "transformed",
+					"table": "MostBookedSeats"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/poakmm_mongodb_mostpopularmatches')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "poakmm_database_azure_ls",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "transformed",
+					"table": "MostpopularMatches"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/poakmm_database_azure_ls')]"
 			]
 		}
 	]

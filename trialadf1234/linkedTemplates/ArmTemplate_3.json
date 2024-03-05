@@ -1,0 +1,491 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "trialadf1234"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "booking copy",
+						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MongoDbAtlasSource",
+								"batchSize": 100
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['booking_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "booking_id",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customer_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "customer_id",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['match_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "match_id",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['seat_number']['$numberInt']"
+										},
+										"sink": {
+											"name": "seat_number",
+											"type": "Int32"
+										}
+									},
+									{
+										"source": {
+											"path": "$['price']['$numberInt']"
+										},
+										"sink": {
+											"name": "price",
+											"type": "String"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "poakmm_mongodb_ds_Bookings",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "POAKMM_MONGO_TO_SQL_Bookings",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "matches copy",
+						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "booking copy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MongoDbAtlasSource",
+								"batchSize": 100
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['match_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "match_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['match_date']"
+										},
+										"sink": {
+											"name": "match_date"
+										}
+									},
+									{
+										"source": {
+											"path": "$['venue_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "venue_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['category_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "category_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['match_name']"
+										},
+										"sink": {
+											"name": "match_name"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "poakmm_mongodb_ds_matches",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "poakmm_mongo_to_sql_matches",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "venues copy",
+						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "matches copy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MongoDbAtlasSource",
+								"batchSize": 100
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['venue_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "venue_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['venue_name']"
+										},
+										"sink": {
+											"name": "venue_name"
+										}
+									},
+									{
+										"source": {
+											"path": "$['venue_location']"
+										},
+										"sink": {
+											"name": "venue_location"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "poakmm_mongodb_ds_venues",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "poakmm_mongo_to_sql_venues",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "customers copy",
+						"type": "Copy",
+						"state": "Inactive",
+						"onInactiveMarkAs": "Succeeded",
+						"dependsOn": [
+							{
+								"activity": "venues copy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MongoDbAtlasSource",
+								"batchSize": 100
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['customer_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "customer_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customer_name']"
+										},
+										"sink": {
+											"name": "customer_name"
+										}
+									},
+									{
+										"source": {
+											"path": "$['customer_email']"
+										},
+										"sink": {
+											"name": "customer_email"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "poakmm_mongodb_ds_customers",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "poakmm_mongo_to_sql_customers",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "matchcategory copy",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "customers copy",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "MongoDbAtlasSource",
+								"batchSize": 100
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"path": "$['category_id']['$numberInt']"
+										},
+										"sink": {
+											"name": "category_id"
+										}
+									},
+									{
+										"source": {
+											"path": "$['category_name']"
+										},
+										"sink": {
+											"name": "category_name"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "poakmm_mongodb_ds_MatchCategories",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "poakmm_mongo_to_sql_MatchCategories",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "METRICS_MONGODB",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "METRICS_MONGODB",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Booking": {},
+									"Customers": {},
+									"Booking1": {},
+									"Matches": {},
+									"Venues": {},
+									"Booking2": {},
+									"Bookings3": {},
+									"TicketsPerUser": {},
+									"RevenuePerUser": {},
+									"MostPopularVenue": {},
+									"MostBookedSeats": {},
+									"MostPopularMatches": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"variables": {
+					"customers": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-03-04T10:01:52Z"
+			},
+			"dependsOn": []
+		}
+	]
+}
