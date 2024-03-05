@@ -1,0 +1,16 @@
+{
+	"name": "result_for_poakmm_mongodb",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "poakmm_database_azure_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "transformed",
+			"table": "NoOfTicketPerUser"
+		}
+	}
+}
